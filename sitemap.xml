@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://ngrayluna.github.io/</loc>
+    <lastmod>2019-10-07T15:53:22-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/project/</loc>
+    <lastmod>2019-10-07T15:53:22-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/project/denoiser/</loc>
+    <lastmod>2019-10-07T15:53:22-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/</loc>
+    <lastmod>2019-09-30T22:14:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/post/</loc>
+    <lastmod>2019-10-01T11:43:17-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/post/p-phase-picker-tutorial/</loc>
+    <lastmod>2019-10-01T11:43:17-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/post/rnn_wkeras/</loc>
+    <lastmod>2019-09-05T14:00:31-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/post/rnn_wnumpy/</loc>
+    <lastmod>2019-08-15T11:43:17-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/authors/admin/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/authors/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/publication_types/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/publication/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/talk/</loc>
+  </url>
+  
+  <url>
+    <loc>https://ngrayluna.github.io/tags/</loc>
+  </url>
+  
+</urlset>

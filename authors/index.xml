@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authors | Gray Luna</title>
+    <link>https://ngrayluna.github.io/authors/</link>
+      <atom:link href="https://ngrayluna.github.io/authors/index.xml" rel="self" type="application/rss+xml" />
+    <description>Authors</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
+    <image>
+      <url>https://ngrayluna.github.io/img/icon-192.png</url>
+      <title>Authors</title>
+      <link>https://ngrayluna.github.io/authors/</link>
+    </image>
+    
+    <item>
+      <title></title>
+      <link>https://ngrayluna.github.io/authors/admin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://ngrayluna.github.io/authors/admin/</guid>
+      <description>&lt;p&gt;Recent M.S. Graduate with experience developing and implementing Deep Neural Networks, processing and handling time-series data, running simulations on HPC, scientific analysis, international collaborative research, and professional work-experience at renowned Seismological Laboratory and Universities. Seeking opportunities to propel data-driven research using various Machine Learning models, implement new algorithms for computer efficiency, and master software used in the scientific programming field in a collaborative environment.
+Currently looking into opportunities in Software Engineering. Open to new opportunities and collaborations!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

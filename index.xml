@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gray Luna</title>
+    <link>https://ngrayluna.github.io/</link>
+      <atom:link href="https://ngrayluna.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <description>Gray Luna</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 07 Oct 2019 15:53:22 -0700</lastBuildDate>
+    <image>
+      <url>https://ngrayluna.github.io/img/icon-192.png</url>
+      <title>Gray Luna</title>
+      <link>https://ngrayluna.github.io/</link>
+    </image>
+    
+    <item>
+      <title>Projects</title>
+      <link>https://ngrayluna.github.io/project/</link>
+      <pubDate>Mon, 07 Oct 2019 15:53:22 -0700</pubDate>
+      <guid>https://ngrayluna.github.io/project/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Posts</title>
+      <link>https://ngrayluna.github.io/post/</link>
+      <pubDate>Mon, 30 Sep 2019 22:14:26 -0700</pubDate>
+      <guid>https://ngrayluna.github.io/post/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link></link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid></guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Publications</title>
+      <link>https://ngrayluna.github.io/publication/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://ngrayluna.github.io/publication/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Recent &amp; Upcoming Talks</title>
+      <link>https://ngrayluna.github.io/talk/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://ngrayluna.github.io/talk/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

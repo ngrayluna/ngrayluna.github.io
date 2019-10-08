@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.5.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Noah Luna">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Table of Contents  What is a RNN &amp; How Do They Work? Writting a RNN with NumPy Building a DNN with Keras  
+What is a Recurrent Neural Network and How Do They Work?
+Neural networks data as independent, isolated events. In other words, we don’t treat and/or make use of sequential data. Therefore, in order to process a time-series data (e.g. accelerometer data from a seismometer) or a sequence of events (e.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://ngrayluna.github.io/post/rnn_wnumpy/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#328cc1">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.62b22f09e99190cb4a0bd1cbb8c2cd5d.css">
+
+  
+
+  
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://ngrayluna.github.io/post/rnn_wnumpy/">
+
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Gray Luna">
+  <meta property="og:url" content="https://ngrayluna.github.io/post/rnn_wnumpy/">
+  <meta property="og:title" content="Code Your Own RNN with NumPy | Gray Luna">
+  <meta property="og:description" content="Table of Contents  What is a RNN &amp; How Do They Work? Writting a RNN with NumPy Building a DNN with Keras  
+What is a Recurrent Neural Network and How Do They Work?
+Neural networks data as independent, isolated events. In other words, we don’t treat and/or make use of sequential data. Therefore, in order to process a time-series data (e.g. accelerometer data from a seismometer) or a sequence of events (e."><meta property="og:image" content="https://ngrayluna.github.io/img/icon-192.png">
+  <meta property="twitter:image" content="https://ngrayluna.github.io/img/icon-192.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2019-04-01T01:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2019-08-15T11:43:17-07:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ngrayluna.github.io/post/rnn_wnumpy/"
+  },
+  "headline": "Code Your Own RNN with NumPy",
+  
+  "datePublished": "2019-04-01T01:00:00Z",
+  "dateModified": "2019-08-15T11:43:17-07:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Noah Luna"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gray Luna",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ngrayluna.github.io/img/icon-512.png"
+    }
+  },
+  "description": "Table of Contents  What is a RNN \u0026amp; How Do They Work? Writting a RNN with NumPy Building a DNN with Keras  \nWhat is a Recurrent Neural Network and How Do They Work?\nNeural networks data as independent, isolated events. In other words, we don’t treat and/or make use of sequential data. Therefore, in order to process a time-series data (e.g. accelerometer data from a seismometer) or a sequence of events (e."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Code Your Own RNN with NumPy | Gray Luna</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Gray Luna</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav ml-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/files/cv_gen.pdf"><span>CV</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Code Your Own RNN with NumPy</h1>
+
+  
+
+  
+    
+
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    Aug 15, 2019
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    10 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://ngrayluna.github.io/post/rnn_wnumpy/&amp;text=Code%20Your%20Own%20RNN%20with%20NumPy" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://ngrayluna.github.io/post/rnn_wnumpy/&amp;t=Code%20Your%20Own%20RNN%20with%20NumPy" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Code%20Your%20Own%20RNN%20with%20NumPy&amp;body=https://ngrayluna.github.io/post/rnn_wnumpy/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://ngrayluna.github.io/post/rnn_wnumpy/&amp;title=Code%20Your%20Own%20RNN%20with%20NumPy" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Code%20Your%20Own%20RNN%20with%20NumPy%20https://ngrayluna.github.io/post/rnn_wnumpy/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <hr />
+
+<p><img src="./img/Neurons-Network_T.jpg"></p>
+
+<h2>Table of Contents</h2>
+
+<ul>
+<li><a href="#what_is_rnn">What is a RNN &amp; How Do They Work?</a></li>
+<li><a href="#rnn_wnumpy">Writting a RNN with NumPy</a></li>
+<li><a href="#dnn_wkeras">Building a DNN with Keras</a></li>
+</ul>
+
+<p><br>
+<h2><a name = 'what_is_rnn'>What is a Recurrent Neural Network and How Do They Work?</a></h2></p>
+
+<p>Neural networks data as independent, isolated events. In other words, we don’t treat and/or make use of sequential data. Therefore, in order to process a time-series data (e.g. accelerometer data from a seismometer) or a sequence of events (e.g. text) you would have to feed the entire sequence to the neural network at once!</p>
+
+<p>This doesn’t make sense both on a computation-level and a human-level.  Think about it, as you read text you are storing a subset of this text in your short-term memory; you are keeping the sequence of words that are relevant for your understanding of the sentence.</p>
+
+<p>This is the idea behind Recurrent Neural Networks.  A <i>recurrent neural network</i> (RNN) processes sequences by iterating through the sequence of elements and maintaining a <i>state</i> containing information relative to what it has seen so far. RNNs are called recurrent because they perform the same task for every element of a sequence, with the output being dependent on the previous computations.</p>
+
+<p>In other words, data points are no longer processed in a single step. The network will loop over itself until it performs the same task on each element on the sequence.  The RNN will reset itself only when it reaches the final element.</p>
+
+<p>Let&rsquo;s visualize this before going through an example. Below we see a typical RNN:</p>
+
+<p><img src="./img/rnn_diagram.png">
+<b>Left </b>A single recurrent network, which is nothing more than a network with a loop. <b>Right </b> The same RNN but <i>unrolled</i> for visualization purposes.<br />
+<br></p>
+
+<p>$x_t$ and $s_t$ are the input and hidden state (both vectors), respectively, at time $t$. Matrices $U$, $V$, and $W$ are the parameters we want to learn from our data. And $o_t$ is the output vector computed using only the hidden state at time $t$.  The hidden state, $s_t$, is calculated based on the previous hidden state ($s_t-1$) and the input at the current step, $x_t$:</p>
+
+<p>$$s_t = f(U * x_t + W * s_t-1)$$</p>
+
+<p>i.e. $s_t$ kept information on what happened from all of the previous steps. It can be thought as a memory object. Note that, unlike other typical neural networks, recurrent neural networks reuse the same parameters (weights) $U$, $V$, and $W$ during the training process.  This makes sense since we are performing the same task on each element of the time sequence, $x_t$.</p>
+
+<p>Our activation function, $f$, is defined either as an $tanh$ or $ReLU$. For example, when $f$ is defined as $tanh$, our hidden state becomes:</p>
+
+<p>$$s_t = tanh(U * x_t + W * s_t-1)$$</p>
+
+<hr />
+
+<h2><a name ='rnn_wnumpy'>Writting your own RNN using Numpy</a></h2>
+
+<p>Let&rsquo;s do some programming to get a deep (pun intended) understanding of recurrent neural networks. To do this we will create a generic and simple RNN using Numpy.  The objective of this exercise it to understand on a basic level how an RNN operates. We will not worry about using real data for now. Instead, let&rsquo;s create random data and feed this to an RNN. We will say that our input vector has $32$ input features (this is what goes into our input layer) and we will have an output vector with $64$ features.</p>
+
+<p>Below are the ingredients you&rsquo;ll need and some psuedo code to get you started.</p>
+
+<p><b>RNN ingredients:</b></p>
+
+<p>1] Define the dimension of the input space. [This it the input layer of our neural network].</p>
+
+<p>2] Define the dimension of the output feature space [Output layer of our neural networt].</p>
+
+<p>3]  Generate random noise as our input ‘data’ [We just want to get an idea of HOW this works].<br />
+<b>Hint:</b> Input vector should have dimensions (timesteps X input_features)</p>
+
+<p>4] Define an initial state, $s_{t}$, of the RNN.</p>
+
+<p>5] Create (random) weight matrices, $W$ and $U$.</p>
+
+<p>6] Create a for loop. that takes in the input with the current state (the previous output) to obtain the current output.<br />
+<b> Hint:</b> Don&rsquo;t forget about our activation function, $f$.</p>
+
+<p>7] Update the state for the next step.</p>
+
+<p>8] The final output should be a 2D tensor with dimensions (timesteps, output_features).</p>
+
+<p><br>
+<h2>Pseudocode for RNN</h2></p>
+
+<pre><code class="language-python"># For the first timestep, the previous output isn’t defined; 
+# Thus, our initial state is set to zero.
+state_t = 0
+
+#Iterates over sequnce elements
+for input_t in input_sequence:
+    output_t = f(input_t, state_t)
+    # The previous output becomes the state for the next iteration.
+    state_t  = output_t
+</code></pre>
+
+<p><br>
+<h2>How this would look like in Python:</h2></p>
+
+<pre><code class="language-python">### Create fake data and store them as a tensor:
+# Number of timesteps in the input sequence.
+timesteps = 100
+
+# Dimensionality of the input feature space
+input_features = 32
+
+# Dimensionality of the output feature space.
+output_features = 64
+
+# Input data is random for the sake of it
+inputs = np.random.random((timesteps, input_features))
+
+
+### RNN ###
+# Initialize state: an all-zero vector
+state_t = np.zeros((output_features))
+
+# The RNN's parameters are two matrices W and U and a bias vector.
+# Initialize random weight matrices
+W = np.random.random((output_features, input_features))
+U = np.random.random((output_features, output_features))
+b = np.random.random((output_features,))
+
+successive_outputs = []
+for input_t in inputs:
+    # Combines the input with the current state (the previous output)
+    # to obtain the current output
+    output_t = np.tanh( np.dot(W, input_t) + np.dot(U, state_t) + b )
+    
+    # Stores this output in a list
+    successive_outputs.append(output_t)
+    
+    # Use for the next round:
+    state_t = output_t
+
+# The final output is a 2D tensor of shape (timesteps, output features)
+final_output_sequence = np.concatenate(successive_outputs, axis = 0)
+</code></pre>
+
+<hr />
+
+<h2><a name = 'dnn_wkeras'>Building a DNN in Keras</a></h2>
+
+<p>Before jumping in to defining an RNN using Keras, let&rsquo;s remind ourselves what pieces we need to compile DNN using Keras&rsquo; high-level neural network API. The ingredients are:</p>
+
+<p><b> Define a model</b>. In TensorFlow there are two ways to do this: first, by using a <span style="font-family:Courier; font-size:1.0em;">Sequential</span> class or second, with a <span style="font-family:Courier; font-size:1.0em;">functional API</span> (which allows you to build arbritrary model structures).  Given that the most common neural network configuration is made up of linear stacks, you&rsquo;ll most likely use the first method more often.</p>
+
+<p><b>Define your DNN by stacking layers</b> We start from  the input layer and <i>sequentially</i> add more
+layers: the hidden layers, and the output layer.(Hence, where the <span style="font-family:Courier; font-size:1.0em;">Class</span> name came from).  Basically, the more layers you stack together, the more complex model you define (but at the potential expense of overfitting and/or long computation times!).</p>
+
+<p>One thing to keep in mind: each layer you define needs to be compatible with the next. In other words, each layer will only accept and return tensors of a certain shape.</p>
+
+<p><b>Compile</b> Before the training occurs, you need to define compile the model. To do this, use Keras&rsquo; <a href="https://keras.io/getting-started/sequential-model-guide/#compilation" target="_blank"><span style="font-family:Courier; font-size:1.0em;">compile</span></a> method.  This method takes in three arguments:<br />
+1) the <a href="https://keras.io/optimizers/" target="_blank">optimizer</a> - optimization algorithm (e.g. SGD, Adam, etc.); 2) the <a href="https://keras.io/losses/" target="_blank">loss</a> function the optimizer will try to minimize; and 3) a list of metrics (e.g. accuracy).</p>
+
+<p>And that&rsquo;s it! The last step is to train the model using Keras&rsquo; <span style="font-family:Courier; font-size:1.0em;">fit</span> function. More on this when we run our own RNN in the next notebook.</p>
+
+<hr />
+
+<p>With the above knowledge fresh in our memory we could replace our Numpy RNN (lines 17 - 39) with this ONE line:</p>
+
+<p><center><span style="font-family:Courier; font-size:1.0em;">model.add(SimpleRNN( ))</span>  </center></p>
+
+<p>For example:</p>
+
+<pre><code class="language-python">from keras.models import Sequential
+from keras import layers 
+from keras.layers import Embedding, Dense, SimpleRNN
+
+model = Sequential()
+model.add(SimpleRNN(10, input_shape=(3, 1)))
+model.add(Dense(1))
+</code></pre>
+
+<pre><code>Using TensorFlow backend.
+</code></pre>
+
+<p>Let&rsquo;s look at this line by line:</p>
+
+<p><b>Line 5:</b> Defined our model architect using a <span style="font-family:Courier; font-size:1.0em;">Sequential</span> class.</p>
+
+<p><b>Line 6:</b> Added our RNN layer (which also serves as our input layer).</p>
+
+<p><b>Line 7:</b> Added a fully connected (i.e. Dense) layer as our output layer.</p>
+
+<p>The <span style="font-family:Courier; font-size:1.0em;">model.summary()</span> function is a convenient way of checking how our deep neural network textually looks like. It provides key information of our architecture such as:</p>
+
+<p>the <b>layer type</b> and the order of the layers from input (first row) to output (bottom row before the &lsquo;=&rsquo;);<br />
+the <b>shape of the tensor</b> for each output (and thus, what is going into the next layer);<br />
+and the <b>number of weights</b> (here labeled &lsquo;parameters&rsquo;) per layer along with a summary of the total number of weights.</p>
+
+<p>For example:</p>
+
+<pre><code class="language-python">model.summary()
+</code></pre>
+
+<pre><code>_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+simple_rnn_1 (SimpleRNN)     (None, 10)                120       
+_________________________________________________________________
+dense_1 (Dense)              (None, 1)                 11        
+=================================================================
+Total params: 131
+Trainable params: 131
+Non-trainable params: 0
+_________________________________________________________________
+</code></pre>
+
+<p>What do we see? The first line is our header</p>
+
+<p><center>[ <span style="font-family:Courier; font-size:1.0em;">Layer(type)</span>, <span style="font-family:Courier; font-size:1.0em;"> Output Shape,</span>, and <span style="font-family:Courier; font-size:1.0em;"> Param # </span>]</center><br />
+Where <span style="font-family:Courier; font-size:1.0em;">Output Shape</span> is the shape of the tensor that is leaving our first layer (<span style="font-family:Courier; font-size:1.0em;">SimpleRNN</span>) and going into the next layer <span style="font-family:Courier; font-size:1.0em;">Dense</span> (i.e. a fully connected layer).</p>
+
+<p>In the next line We see that we have an output shape of (None, 10) and 120 Parameters:<br></p>
+
+<p><center><span style="font-family:Courier; font-size:1.0em;">simple_rnn_1 (SimpleRNN) (None, 10) 120 </span>  </center></p>
+
+<p>What does this mean? When we wrote line 6:<br />
+<center><span style="font-family:Courier; font-size:1.0em;">SimpleRNN(10, input_shape=(3, 1))</span></center></p>
+
+<p>We specified that we had 10 weights (parameters) and input shape of (3,1). The 3 here means we have 3 sequences(e.g. three timeseries points) we want to input and 1 featuere (e.g. Temperature).</p>
+
+<p>OK, now to the weights.  From the output above we have 120 parameters. Why do we have 120 parameters?</p>
+
+<p>Remember, there are two things going on with our simple RNN: First you have the recurrent loop, where the state is fed recurrently into the model to generate the next step.  Weights for the recurrent step are:</p>
+
+<p><center><b>recurrent_weights</b> = num_units * num_units</center></p>
+
+<p>Second, there is a new input of your sequence at each step:
+<br><center><b>input_weights</b> = num_features * num_units</center></p>
+
+<p>So now we have the weights, whats missing are the biases - for every unit one bias:</p>
+
+<p><center><b>biases</b> = num_units * 1</center></p>
+
+<p>In our case we have that num_units = $10$ and num_features = $1$.</p>
+
+<p>Putting this altogether we have the following formula for the number of parameters/weights:<br />
+<center><span style="font-family:Courier; font-size:1.0em;">Parameters</span> = num_units x num_units + num_features x num_units + biases</center></p>
+
+<p>Where <b>num_units</b> is the number of weights in the RNN (<span style="font-family:Courier; font-size:1.0em;">10</span>) and <b>num_features</b> is the number features of our input. (In thie case <span style="font-family:Courier; font-size:1.0em;">1</span>).<br />
+<center><span style="font-family:Courier; font-size:1.0em;">Parameters</span> = $10 * 10 + 1 * 10 + 10 = 120$</center></p>
+
+<p>Finally, we have our output layer. In this example we defined it as a <span style="font-family:Courier; font-size:1.0em;">Dense</span> layer:</p>
+
+<p><center><span style="font-family:Courier; font-size:1.0em;">Dense(1)</span>  </center></p>
+
+<p>So this last <span style="font-family:Courier; font-size:1.0em;">Dense</span> layer takes its input (<span style="font-family:Courier; font-size:1.0em;">10</span> (the output of the previous layer) and adds the bias to give us <span style="font-family:Courier; font-size:1.0em;">11</span> parameters/weights. Since we defined the dense layer as: <span style="font-family:Courier; font-size:1.0em;">Dense(1)</span> we are telling our neural network that we want a single output.</p>
+
+<hr />
+
+<p>Great! So you now how they work and you just looked through a short example of how you could implement a RNN model using Keras.  In the next notebook we will do a full runthrough of creating and running a RNN on real data.</p>
+
+<p>Just as an aside, while the RNN we defined was cute and simple, in practice these simple RNNs are not used. The reason? Well, we run into the problem of vanishing gradients and exploding gradients.  The vanishing gradient problem is why folks use the more exotic recurrent neural network known as long short term memory (LSTM).  I won&rsquo;t go over the details here, but you can think of LSTMs as an extended version of recurrent neural networks. LSTMs act like computers in that they can read, delete, and add to their &lsquo;stored&rsquo; memory. This allows them to &lsquo;extend&rsquo; their &lsquo;short term memory&rsquo; to &lsquo;longer short term memory&rsquo;.</p>
+
+<p>If you are curious, I suggest checking this blog by <a href ='https://medium.com/deep-math-machine-learning-ai/chapter-10-1-deepnlp-lstm-long-short-term-memory-networks-with-math-21477f8e4235'>Madhu Sanjeevi</a>. It&rsquo;s one of my favorite explainations of LSTMs.</p>
+
+<hr />
+
+<hr />
+
+<h3>About this Notebook</h3>  
+
+<p>The above example and code is from Ch.6 of Chollet&rsquo;s <i>Deep Learning with Python</i>[1]. Content was added for further clarification and readability.</p>
+
+<p>Jupyter Notebook by: Noah Luna</p>
+
+<h3>Suggested Reading Material</h3>  
+
+<ul>
+<li><p>Géron, A. (2017). Hands-On Machine Learning with Scikit-Learn and TensorFlow: Concepts, Tools, and Techniques for Building Intelligent Systems. O&rsquo;Reilly UK Ltd.</p></li>
+
+<li><p>Karpath, Andrej. &ldquo;The Unreasonable Effectiveness of Recurrent Neural Networks&rdquo; <i>Andrej Karpathy blog</i>, 24 March 2017, <a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/" target="_blank">http://karpathy.github.io/2015/05/21/rnn-effectiveness/</a></p></li>
+
+<li><p>Sanjeevi, Madhu. &ldquo;DeepNLP — LSTM (Long Short Term Memory) Networks with Math&rdquo; <i>Medium</i>, 21 Jan 2018, <a href="https://medium.com/deep-math-machine-learning-ai/chapter-10-1-deepnlp-lstm-long-short-term-memory-networks-with-math-21477f8e4235" target="_blank">https://medium.com/deep-math-machine-learning-ai/chapter-10-1-deepnlp-lstm-long-short-term-memory-networks-with-math-21477f8e4235</a></p></li>
+</ul>
+
+<h3>Sources</h3>  
+
+<ul>
+<li>[1]Chollet, F. (2017). Deep Learning with Python. Manning Publications.</li>
+</ul>
+
+<hr />
+
+<hr />
+
+    </div>
+
+    
+
+
+    
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu83bf9698254eb6e8b51d368e10a1a98c_35115_250x250_fill_q90_lanczos_center.jpg" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://ngrayluna.github.io/">Noah Luna</a></h5>
+      <h6 class="card-subtitle">Recent MS Graduate Student</h6>
+      <p class="card-text">My research interests include applications of deep neural networks in seismology, theoretrical frameworks of deep neural networks, seismic sources, and time-series analysis.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+          <li>
+            <a href="mailto:nluna@berkeley.edu" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a href="https://github.com/ngrayluna" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a href="https://www.linkedin.com/in/noah-luna-linked/" target="_blank" rel="noopener">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a href="/files/cv_gen.pdf" >
+              <i class="ai ai-cv"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+    
+
+    
+
+    
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js" integrity="sha256-0w92bcB21IY5+rGI84MGj52jNfHNbXVeQLrZ0CGdjNY=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.130521ecfc6f534c52c158217bbff718.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+
+
+    <p class="powered-by">
+    
+
+    Copyright © 2019 Gray Luna
+
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

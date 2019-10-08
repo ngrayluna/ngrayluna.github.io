@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.5.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Noah Luna">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Introduction Earthquakes are unpredictable. And if you are a Californian Native like me (or happen to live near an active earthquake fault), chances are you have felt ground shaking caused by an earthquake. There is no algorithm to predict earthquakes. However, the physics governing seismic wave propagation allow us to prepare ourselves from shaking once an earthquake has occured.
+Seismic waves travel slower than light (i.e. the speed at which emails, txts, travel).">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#328cc1">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.62b22f09e99190cb4a0bd1cbb8c2cd5d.css">
+
+  
+
+  
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/">
+
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Gray Luna">
+  <meta property="og:url" content="https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/">
+  <meta property="og:title" content="Identifying Seismic Waves with Convolutional Neural Networks [Part I] | Gray Luna">
+  <meta property="og:description" content="Introduction Earthquakes are unpredictable. And if you are a Californian Native like me (or happen to live near an active earthquake fault), chances are you have felt ground shaking caused by an earthquake. There is no algorithm to predict earthquakes. However, the physics governing seismic wave propagation allow us to prepare ourselves from shaking once an earthquake has occured.
+Seismic waves travel slower than light (i.e. the speed at which emails, txts, travel)."><meta property="og:image" content="https://ngrayluna.github.io/img/icon-192.png">
+  <meta property="twitter:image" content="https://ngrayluna.github.io/img/icon-192.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2019-09-30T22:14:26-07:00">
+    
+    <meta property="article:modified_time" content="2019-09-30T22:14:26-07:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/"
+  },
+  "headline": "Identifying Seismic Waves with Convolutional Neural Networks [Part I]",
+  
+  "datePublished": "2019-09-30T22:14:26-07:00",
+  "dateModified": "2019-09-30T22:14:26-07:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Noah Luna"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gray Luna",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ngrayluna.github.io/img/icon-512.png"
+    }
+  },
+  "description": "Introduction Earthquakes are unpredictable. And if you are a Californian Native like me (or happen to live near an active earthquake fault), chances are you have felt ground shaking caused by an earthquake. There is no algorithm to predict earthquakes. However, the physics governing seismic wave propagation allow us to prepare ourselves from shaking once an earthquake has occured.\nSeismic waves travel slower than light (i.e. the speed at which emails, txts, travel)."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Identifying Seismic Waves with Convolutional Neural Networks [Part I] | Gray Luna</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Gray Luna</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav ml-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/files/cv_gen.pdf"><span>CV</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Identifying Seismic Waves with Convolutional Neural Networks [Part I]</h1>
+
+  
+
+  
+    
+
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Sep 30, 2019
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    12 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/&amp;text=Identifying%20Seismic%20Waves%20with%20Convolutional%20Neural%20Networks%20[Part%20I]" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/&amp;t=Identifying%20Seismic%20Waves%20with%20Convolutional%20Neural%20Networks%20[Part%20I]" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Identifying%20Seismic%20Waves%20with%20Convolutional%20Neural%20Networks%20[Part%20I]&amp;body=https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/&amp;title=Identifying%20Seismic%20Waves%20with%20Convolutional%20Neural%20Networks%20[Part%20I]" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Identifying%20Seismic%20Waves%20with%20Convolutional%20Neural%20Networks%20[Part%20I]%20https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p><img src="./img/Neurons-Network_T.jpg"></p>
+
+<h2><a name="intro">Introduction</a></h2>
+
+<p>Earthquakes are unpredictable. And if you are a Californian Native like me (or happen to live near an active earthquake fault), chances are you have felt ground shaking caused by an earthquake. There is no algorithm to predict earthquakes. However, the physics governing seismic wave propagation allow us to prepare ourselves from  shaking once an earthquake has occured.</p>
+
+<p>Seismic waves travel slower than light (i.e. the speed at which emails, txts, travel). It is therefore possible to send a warning about incoming ground motion shaking after an earthquake has occured. This is the main idea behind <a href="https://seismo.berkeley.edu/research/eew_basics.html#targetText=What%20is%20Earthquake%20Early%20Warning,how%20big%20the%20earthquake%20is" target="_blank">Earthquake Early Warning</a>. The idea being that, if we are a certain distance away from the earthquake hypocenter, we could send a warning (somewhere between seconds to a minute or two) via a txt, email, app. etc to someone else who is in the direction of the incoming seismic waves.</p>
+
+<p>In order to send an earthquake early warning, however, seismologists need to have a high level of certainty that: 1) the ground motion recorded by a seismometer is in fact an earthquake and not background noise (e.g. someone walking near a sensor) and 2) the location of the earquake.</p>
+
+<p>Luckily we have computers to accomplish this. Unfortunately, typical detection systems take about a minute to send an earthquake alert. This is partly due to the fact that it takes time to both: get enough information from several seismometers and process the data.</p>
+
+<p>Can Machine Learning, specifically Deep Learning, give us an alternative approach? An approach which is more accurate and/or faster? More specifically, can we train a deep neural network to help us identify features in seismic records which will allow us determine if an earthquake has occured and if yes, where is it?</p>
+
+<p>To make OUR grandiose problem more manageable, we will boil this problem down to a much simpler one:</p>
+
+<p><center><b><span style="font-family:Helvetica Neue; font-size:1.4em;">&ldquo;Can we train a deep neural network to identify the first seismic wave recorded on a seismometer?&rdquo;</span></b></center></p>
+
+<p>In other words, let&rsquo;s assume we have already identified the seismic record is in fact an earthquake. Our task is to now identify the location of the earthquake. To do this we need to know when the incoming wave was first spotted. In other words, we need to know when the first seismic phase has arrived. This phase is known as the Primary Phase (or P-wave) and is marked with a red vertical line in the image below.</p>
+
+<p><img src = "./img/2838868.GR.WET_mod.png">
+<b>Figure:</b> Earthquake recorded by a seismometer in Wettzell, Germany. The red vertical line notes the Primary Phase, the first seismic phase recorded by the seismometer. The blue vertical line depicts another type of surface phase known as the Secondary Phase. To identify the phases a human (or computer) is looking for a change in both amplitude and frequency.  The x axis is in units of number of samples (npts).</p>
+
+<p><br>
+The p-wave travels the faster than other phases (e.g. the S-phase shown above), however the frequency and the polarization (direction) of these waves tends to not cause structural damage (depending on how large the earthquake is, of course). The more destructive seismic phases, known as surface waves, take longer to arrive than the p-wave. The further you are from the earthquake, the larger the time lag between the p-wave and these  destructive surface waves. Thus, if we can detect the p-wave (and accurately) we can then compute how much time a person has before they should expect ground motion shaking.</p>
+
+<p>In this two-part tutorial we will establish the following machine learning workflow:</p>
+
+<p><b>Download seismic data</b> → <b>Pre-process data &amp; format it for training</b> → <b>Decide which DNN to use and create it</b> → <b>Train model</b> → <b>Analyze Results</b></p>
+
+<p>For the sake of making the tutorial a little more digestable, we will split the tutorial into two parts. Part I (this notebook) will focus on: framing the problem, how to download data, and pre-processing the data we have downloaded.</p>
+
+<h2>Table of Contents</h2>
+
+<ul>
+<li><a href="#intro">Introduction</a><br /></li>
+<li><a href="#frame">Framing the Problem</a></li>
+<li><a href="#download">Downloading Seismic Data</a><br /></li>
+<li><a href="#pre_process">Pre-Process</a><br /></li>
+<li><a href="#download">Saving the Data</a></li>
+<li><a href="#summary">Summary</a></li>
+</ul>
+
+<hr />
+
+<h2><a name ="frame">Framing the Problem</a></h2>
+
+<p>Let&rsquo;s begin! Before we download data let&rsquo;s go over the details of how we will accomplish our objective.  Remember our goal is to identify where the first seismic phase, i.e. the p-wave, is in our records. Our plan of attack will be to use a Convolutional Neural Network (CNN). Convolutional neural networks are a type of deep neural network that handle data that is either time or spatially dependent, such as seismograms (time-dependency) or images (spatial dependency) just to name a couple of examples.</p>
+
+<p>Our data will consist of seismograms of earthquake events recorded by seismometers in California. The seismic records we collect and process are the input to our CNN. Our labels will consist of scalar-valued, p-wave picks made by seismologists (e.g. the point the vertical line crosses on the x-axis in the image above).  Thus, for each training instance, we will give our CNN a seismic record (time-series array) as input, x, and its associated p-wave location as its label, y.</p>
+
+<p>During training our neural network will try to identify which features are relevant in the waveforms that allow it to accurately determine where the p-wave. Visually, we as humans can tell where this is by looking in a sudden chance in both frequency and amplitude.</p>
+
+<p>In our case we have two different options of how we can feed our CNN our data. We can either feed it images or we can keep the data in arrays. If we choose the former, we will need to define a 2D convolutional neural network. Alternatively, we can use a 1D CNN and keep our data in arrays. Since I want to have as output arrays for further processing, I’ll keep my data in its original 1D format, as it will make future analysis easier.</p>
+
+<p>Groovy. We now have a more solid outline of what we need to do. Let’s now download some data!</p>
+
+<hr />
+
+<h2><a name ="download">Downloading Seismic Data</a></h2>  
+
+<p>Now that we have a gameplan, let’s get our hands dirty and download some seismic data. Luckily for us, the vast majority of earthquake data centers are open and free for public use. In California there are two well-known data centers, the Northern California Earthquake Data Center and the Southern California Data Center.</p>
+
+<p>We’ll use data recorded from stations in Northern California. You can find a list of stations, their state of health, and history from the
+<a href="http://ncedc.org/" target="_blank">NCEDC</a> website.</p>
+
+<p><img src ='./img/ca_seismic_stations.png'>
+<b>Figure:</b> Subset of seismic stations in Northern California. Yellow circles depict broadband stations and blue depict borehole stations. Courtesy of the NCEDC.</p>
+
+<p>I will pick some of my personal favorite stations for this tutorial, but feel free to check out others and see what their data looks like in comparison. There is a nifty Python library known as <a href="https://github.com/obspy/obspy/wiki" target="_blank">ObsPy</a> which makes accessing seismic data quick and easy. Let&rsquo;s import ObsPy along with some other Python libraries and check out how our data looks like:</p>
+
+<pre><code class="language-python">import os
+import numpy as np
+import pandas as pd
+from obspy.clients.fdsn import Client
+from obspy import Stream, UTCDateTime
+from obspy.core.event import read_events
+
+
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
+</code></pre>
+
+<p>Let’s look at how one of these events look like as recorded by a broadband seismometer. You&rsquo;ll notice that in this example I have picked a specific network, station, and channels. Feel free to use * to specify all in ObsPy. This will return a list of several networks, stations, locations, and channels to use for the time duration specified for start time and end time parameters.</p>
+
+<p>For the sake of having a &lsquo;nice&rsquo; waveform to look at, I&rsquo;ll manually specify the time of a known earthquake event. (There are more clever ways of querying for earthquakes, but let’s keep it simple and look at just one example). Specifically, I&rsquo;ll download a <a href="https://earthquake.usgs.gov/earthquakes/eventpage/nc73286930/executive" target="_blank">recent (as of writting this post) earthquake</a> off the cost of San Francisco.</p>
+
+<pre><code class="language-python">network = &quot;BK&quot;
+station = &quot;CMB&quot;
+location = &quot;*&quot;
+channel = &quot;BH*&quot;
+starttime = UTCDateTime(&quot;2019-10-05T15:40:00&quot;)
+endtime = starttime + 300
+
+client  = Client(&quot;NCEDC&quot;)
+stream = client.get_waveforms(network = network, station = station, location = location,\
+                              channel = &quot;BH*&quot;, starttime=starttime, endtime=endtime)
+</code></pre>
+
+<h3>Quick Note About ObsPy's Stream Object</h3>
+
+<p>The following is directly from [ObsPy&rsquo;s Documentation] page (<a href="https://docs.obspy.org/packages/obspy.core.html):" target="_blank">https://docs.obspy.org/packages/obspy.core.html):</a>
+Seismograms of various formats (e.g. SAC, MiniSEED, GSE2, SEISAN, Q, etc.) can be imported into a Stream object using the <span style="font-family:Courier; font-size:1.0em;">read()</span> function.</p>
+
+<p>Streams are list-like objects which contain multiple Trace objects, i.e. gap-less continuous time series and related header/meta information.</p>
+
+<p>Each Trace object has the attribute data pointing to a NumPy ndarray of the actual time series and the attribute stats which contains all meta information in a dict-like Stats object. Both attributes starttime and endtime of the Stats object are UTCDateTime objects. A multitude of helper methods are attached to Stream and Trace objects for handling and modifying the waveform data.&rdquo;</p>
+
+<p>For example, for each recording our station records motion in three different directions: a vertical motion (up-down) and two horizontal motions (N-S and E-W).  Thus, our <span style="font-family:Courier; font-size:1.0em;">Stream</span> object has three <span style="font-family:Courier; font-size:1.0em;">Traces</span>.</p>
+
+<pre><code class="language-python">stream
+</code></pre>
+
+<pre><code>3 Trace(s) in Stream:
+BK.CMB.00.BHE | 2019-10-05T15:40:00.019538Z - 2019-10-05T15:44:59.994538Z | 40.0 Hz, 12000 samples
+BK.CMB.00.BHN | 2019-10-05T15:40:00.019538Z - 2019-10-05T15:44:59.994538Z | 40.0 Hz, 12000 samples
+BK.CMB.00.BHZ | 2019-10-05T15:40:00.019538Z - 2019-10-05T15:44:59.994538Z | 40.0 Hz, 12000 samples
+</code></pre>
+
+<p>Each Trace object has head information which we can access by printing the attributes:</p>
+
+<pre><code class="language-python">trace0 = stream[0]
+print(trace0.stats)
+</code></pre>
+
+<pre><code>               network: BK
+               station: CMB
+              location: 00
+               channel: BHE
+             starttime: 2019-10-05T15:40:00.019538Z
+               endtime: 2019-10-05T15:44:59.994538Z
+         sampling_rate: 40.0
+                 delta: 0.025
+                  npts: 12000
+                 calib: 1.0
+_fdsnws_dataselect_url: http://service.ncedc.org/fdsnws/dataselect/1/query
+               _format: MSEED
+                 mseed: AttribDict({'dataquality': 'D', 'number_of_records': 7, 'encoding': 'STEIM2', 'byteorder': '&gt;', 'record_length': 4096, 'filesize': 81920})
+</code></pre>
+
+<p>We&rsquo;ll use this information to make some useful unit conversions in our plots.</p>
+
+<pre><code class="language-python">sampling_rate = trace0.stats.sampling_rate
+npts  = trace0.stats.npts
+delta = trace0.stats.delta
+
+time = np.arange(0, npts / sampling_rate, delta)
+</code></pre>
+
+<p>Plotting this with Python&rsquo;s <a href="https://matplotlib.org/" target="_blank">Matplotlib</a> we have:</p>
+
+<pre><code class="language-python">rows = 3
+fig, axes = plt.subplots(nrows = 3, ncols = 1, figsize = (16,10))
+axes[0].plot(time, stream[0], color = 'black')
+axes[1].plot(time, stream[1], color = 'black')
+axes[2].plot(time, stream[2], color = 'black')
+axes[rows - 1].set_xlabel('Time [s]')
+</code></pre>
+
+<pre><code>Text(0.5,0,'Time [s]')
+</code></pre>
+
+<p><img src="output_12_1.png" alt="png" /></p>
+
+<p>In addition to the training data we will need to also provide labels to our CNN. We are interested in training a CNN to identify the first arriving seismic phase, the p-wave. We can manually identify this by looking at the waveform and searching for a time where both the frequency and amplitude of the waveform changes drastically. In our example we can see this occurring at around 30 seconds.  This is the label we will provide to our neural network.</p>
+
+<p>Manually picking our entire data set is something we would have to do IF it were not for the fact that the NCEDC has had individuals manually pick earthquakes for decades and provided it for all to use. We’ll take advantage of their hardwork and simply make a query to download waveforms and their associated p-phase arrival time and store it into a Pandas DataFrame.</p>
+
+<p>To find the manually picked phase arrival we&rsquo;ll search through the archived catalogue of events using ObsPy&rsquo;s <span style="font-family:Courier; font-size:1.0em;">get_events()</span> method.</p>
+
+<pre><code class="language-python"># Minimum magnitude earthquake to search for
+minmag = 3.0
+
+# Maximum search radius around station to look for events
+maxrad = 2.697
+
+stla = 38.03
+stlo = -120.39
+
+cat = client.get_events(starttime=starttime, endtime=endtime, latitude=stla, longitude=stlo,\
+                        maxradius=maxrad, minmagnitude=minmag,\
+                        includearrivals = True)
+print(cat)
+</code></pre>
+
+<pre><code>1 Event(s) in Catalog:
+2019-10-05T15:41:06.570000Z | +37.660, -122.521 | 3.54 Mw | manual
+</code></pre>
+
+<pre><code class="language-python">station_picks = []
+for n, event in enumerate(cat):
+    origin_info = event.origins[0].arrivals
+    
+    for i, pick in enumerate(event.picks):
+        onset = pick.onset
+        polarity = pick.polarity
+        evaluation_mode = pick.evaluation_mode
+        evaluation_status = pick.evaluation_status
+        phase_time = pick.time
+
+        arrival = origin_info[i]
+        pick_id = pick.resource_id
+        pid = arrival['pick_id']
+        
+        if pid != pick_id:
+
+            new_arrival = \
+                [arrival for arrival in origin_info if arrival['pick_id'] == pick_id]
+            if len(new_arrival) &lt; 1:
+                continue
+            phase = new_arrival[0]['phase']
+        else:
+            phase = arrival['phase']
+</code></pre>
+
+<pre><code class="language-python"># EventID
+eventID = event.resource_id.id.split('/')[-1]
+
+# Let's convert from UTC to something we can work with
+p_arrival = abs(stream[0].stats.starttime.timestamp - phase_time.timestamp)
+
+print(&quot;EventID {}&quot;.format(eventID))
+print(&quot;First seismic wave arrives {} seconds from the start of our record.&quot;.format(round(p_arrival, 3)))
+</code></pre>
+
+<pre><code>EventID 73286930
+First seismic wave arrives 91.86 seconds from the start of our record.
+</code></pre>
+
+<p>Let&rsquo;s plot this to see how this looks like:</p>
+
+<pre><code class="language-python">time = np.arange(0, stream[0].stats.npts / stream[0].stats.sampling_rate, stream[0].stats.delta )
+
+fig, axes = plt.subplots(nrows = 1, ncols = 1 , figsize = (16,6))
+axes.plot(time, stream[0].data, color = 'black')
+axes.axvline(p_arrival, color = 'red')
+axes.set_xlabel(&quot;Time [s]&quot;)
+</code></pre>
+
+<pre><code>Text(0.5,0,'Time [s]')
+</code></pre>
+
+<p><img src="output_18_1.png" alt="png" /></p>
+
+<p>As expected the p-arrival is pick made by the human analyst was made when there was a change in amplitude and frequency. In this case this happens at around 350 seconds.</p>
+
+<hr />
+
+<h2><a name = "pre_process">Pre-Processing</a></h2>  
+
+<p>If you have experience with signal processing, you already know there are a slew of tools to process audio recordings. We can use similar processing tools for seismic data. In particular, we’ll want to remove trends and filter out unwanted noise. Let’s do that with some of Stream&rsquo;s useful methods:</p>
+
+<pre><code class="language-python"># Both the detrend() and filter() operation is performed in place of the actual arrays.
+# Let's make a copy of this Stream in order to have access to the original. 
+st = stream.copy()
+
+# Detrend
+st.detrend()
+
+# Apply high pass filter
+max_freq = (1/2)
+st.filter(type=&quot;highpass&quot;, freq = max_freq)
+</code></pre>
+
+<pre><code>3 Trace(s) in Stream:
+BK.CMB.00.BHE | 2019-10-05T15:40:00.019538Z - 2019-10-05T15:44:59.994538Z | 40.0 Hz, 12000 samples
+BK.CMB.00.BHN | 2019-10-05T15:40:00.019538Z - 2019-10-05T15:44:59.994538Z | 40.0 Hz, 12000 samples
+BK.CMB.00.BHZ | 2019-10-05T15:40:00.019538Z - 2019-10-05T15:44:59.994538Z | 40.0 Hz, 12000 samples
+</code></pre>
+
+<p>Plotting the waveforms after applying our filters you&rsquo;ll notice that the traces have less noise before the p-wave and after the signal trails off.</p>
+
+<pre><code class="language-python">rows = 3
+fig, axes = plt.subplots(nrows = rows, ncols = 1, figsize = (16,10))
+axes[0].set_title(&quot;Event ID {}&quot;.format(eventID))
+axes[0].plot(time, st[0], color = 'black')
+axes[1].plot(time, st[1], color = 'black')
+axes[2].plot(time, st[2], color = 'black')
+axes[rows - 1].set_xlabel(&quot;Time [s]&quot;)
+
+for i in range(rows):
+    axes[i].axvline(p_arrival, color = 'red')
+</code></pre>
+
+<p><img src="output_23_0.png" alt="png" /></p>
+
+<h2><a name = "download">Saving the Data</a></h2>  
+
+<p>There are several file format options we have at our disposal. To keep things simple, we&rsquo;ll use NumPy&rsquo;s array method <span style="font-family:Courier; font-size:1.0em;">np.savez_compressed()</span>, which is NumPy&rsquo;s way of saving arrays into a compressed file format with file extension <span style="font-family:Courier; font-size:1.0em;">.npz</span>. Once we have done a mass download of our waveforms, we&rsquo;ll save our NumPy arrays using somthing like:</p>
+
+<p><center><span style="font-family:Courier; font-size:1.0em;">np.savez_compressed(array, file_name)</span></center></p>
+
+<p>where <span style="font-family:Courier; font-size:1.0em;">array</span> is a NumPy array with all of our seismograms and <span style="font-family:Courier; font-size:1.0em;">file_name</span> is the name of the output file our NumPy arrays are saved in. For example, in this tutorial I used:</p>
+
+<p><center><span style="font-family:Courier; font-size:1.0em;">np.savez_compressed(&lsquo;./dataset_3comp.npz&rsquo;, clean_data_set)</span></center></p>
+
+<p>We&rsquo;ll also need to make sure we save a separate NumPy array which will contains our labels, the p-wave picks. For example:</p>
+
+<p><center><span style="font-family:Courier; font-size:1.0em;">np.savez_compressed(&lsquo;./dataset_3comp_cleanlabels.npz&rsquo;, clean_labels)</span></center></p>
+
+<p>See the associated <a href ="https://github.com/ngrayluna/P_Phase_Picker">GitHub repository</a> for the more technical details on how I did this.</p>
+
+<hr />
+
+<h2><a name = "summary">Summary</a></h2>
+
+<p>In this tutorial we formally stated the problem, broke down a complicated problem into a more manageable one, downloaded time-series data and manually picked phase information, processed the data by applying filters and demeaning it, and we ended by saving it into a compressed file format (.npz). In the next blog we will go over how to: read in saved training data labels, format the data for training, build a baseline CNN model, train said model, make first-and make first-order interpretations.</p>
+
+<hr />
+
+<hr />
+
+<h3>Suggest Reading Material</h3>  
+
+<ul>
+<li><p>Ackermann, Nils. &ldquo;Introduction to 1D Convolutional Neural Networks in Keras for Time Sequences&rdquo; <i>Medium</i>, 04 September 2018, <a href="https://blog.goodaudience.com/introduction-to-1d-convolutional-neural-networks-in-keras-for-time-sequences-3a7ff801a2cf" target="_blank">https://blog.goodaudience.com/introduction-to-1d-convolutional-neural-networks-in-keras-for-time-sequences-3a7ff801a2cf</a></p></li>
+
+<li><p>Géron, A. (2017). Hands-On Machine Learning with Scikit-Learn and TensorFlow: Concepts, Tools, and Techniques for Building Intelligent Systems. O&rsquo;Reilly UK Ltd.</p></li>
+
+<li><p><a href="https://seismo.berkeley.edu/research/eew_basics.html#targetText=What%20is%20Earthquake%20Early%20Warning,how%20big%20the%20earthquake%20is" target="_blank">Information on Earthquake Early Warning</a> provided by the U.C. Berkeley Seismological Laboratory</p></li>
+
+<li><p>Stanford CS class CS231n: <a href="http://cs231n.github.io/" target="_blank">Convolutional Neural Networks for Visual Recognition</a>.</p></li>
+</ul>
+
+<hr />
+
+<hr />
+
+    </div>
+
+    
+
+
+    
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu83bf9698254eb6e8b51d368e10a1a98c_35115_250x250_fill_q90_lanczos_center.jpg" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://ngrayluna.github.io/">Noah Luna</a></h5>
+      <h6 class="card-subtitle">Recent MS Graduate Student</h6>
+      <p class="card-text">My research interests include applications of deep neural networks in seismology, theoretrical frameworks of deep neural networks, seismic sources, and time-series analysis.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+          <li>
+            <a href="mailto:nluna@berkeley.edu" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a href="https://github.com/ngrayluna" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a href="https://www.linkedin.com/in/noah-luna-linked/" target="_blank" rel="noopener">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a href="/files/cv_gen.pdf" >
+              <i class="ai ai-cv"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+    
+
+    
+
+    
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js" integrity="sha256-0w92bcB21IY5+rGI84MGj52jNfHNbXVeQLrZ0CGdjNY=" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.130521ecfc6f534c52c158217bbff718.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+
+
+    <p class="powered-by">
+    
+
+    Copyright © 2019 Gray Luna
+
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
