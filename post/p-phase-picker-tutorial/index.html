@@ -28,8 +28,9 @@
   
     
   
-  <meta name="description" content="In Part I we will cover the first steps of the machine learning pipeline: Framing the Problem, Retrieving the Data , Exploring and Understanding your Data, and Processing the Data for training .
-In this notebook we will go sraight into compiling, training, and evaluating a baseline convolutional neural network. We&rsquo;ll end by going over what still needs to be done before we can consider this model ready for deployment.">
+  <meta name="description" content="In Part I we covered the first steps of our machine learning pipeline: Framing the Problem, Retrieving the Data , Exploring and Understanding your Data, and Processing the Data for training .
+In this tutorial we will go sraight into compiling, training, and evaluating a baseline convolutional neural network. We&rsquo;ll end by going over what still needs to be done before we can consider this model ready for deployment.
+Table of Contents  Read Data In A Convolutional Neural Network Baseline Training Model Interpreting the Results Visualizing the Results What&rsquo;s Next Conclusion">
 
   
   <link rel="alternate" hreflang="en-us" href="https://ngrayluna.github.io/post/p-phase-picker-tutorial/">
@@ -113,8 +114,9 @@ In this notebook we will go sraight into compiling, training, and evaluating a b
   <meta property="og:site_name" content="Gray Luna">
   <meta property="og:url" content="https://ngrayluna.github.io/post/p-phase-picker-tutorial/">
   <meta property="og:title" content="Identifying Seismic Waves with Convolutional Neural Networks [Part II] | Gray Luna">
-  <meta property="og:description" content="In Part I we will cover the first steps of the machine learning pipeline: Framing the Problem, Retrieving the Data , Exploring and Understanding your Data, and Processing the Data for training .
-In this notebook we will go sraight into compiling, training, and evaluating a baseline convolutional neural network. We&rsquo;ll end by going over what still needs to be done before we can consider this model ready for deployment."><meta property="og:image" content="https://ngrayluna.github.io/img/icon-192.png">
+  <meta property="og:description" content="In Part I we covered the first steps of our machine learning pipeline: Framing the Problem, Retrieving the Data , Exploring and Understanding your Data, and Processing the Data for training .
+In this tutorial we will go sraight into compiling, training, and evaluating a baseline convolutional neural network. We&rsquo;ll end by going over what still needs to be done before we can consider this model ready for deployment.
+Table of Contents  Read Data In A Convolutional Neural Network Baseline Training Model Interpreting the Results Visualizing the Results What&rsquo;s Next Conclusion"><meta property="og:image" content="https://ngrayluna.github.io/img/icon-192.png">
   <meta property="twitter:image" content="https://ngrayluna.github.io/img/icon-192.png"><meta property="og:locale" content="en-us">
   
     
@@ -177,7 +179,7 @@ In this notebook we will go sraight into compiling, training, and evaluating a b
       "url": "https://ngrayluna.github.io/img/icon-512.png"
     }
   },
-  "description": "In Part I we will cover the first steps of the machine learning pipeline: Framing the Problem, Retrieving the Data , Exploring and Understanding your Data, and Processing the Data for training .\nIn this notebook we will go sraight into compiling, training, and evaluating a baseline convolutional neural network. We\u0026rsquo;ll end by going over what still needs to be done before we can consider this model ready for deployment."
+  "description": "In Part I we covered the first steps of our machine learning pipeline: Framing the Problem, Retrieving the Data , Exploring and Understanding your Data, and Processing the Data for training .\nIn this tutorial we will go sraight into compiling, training, and evaluating a baseline convolutional neural network. We\u0026rsquo;ll end by going over what still needs to be done before we can consider this model ready for deployment.\nTable of Contents  Read Data In A Convolutional Neural Network Baseline Training Model Interpreting the Results Visualizing the Results What\u0026rsquo;s Next Conclusion"
 }
 </script>
 
@@ -581,9 +583,11 @@ In this notebook we will go sraight into compiling, training, and evaluating a b
 
 <p><img src="./img/Neurons-Network_T.jpg"></p>
 
-<p>In Part I we will cover the first steps of the machine learning pipeline: <b>Framing the Problem</b>, <b>Retrieving the Data </b>, <b>Exploring and Understanding your Data</b>, and <b>Processing the Data for training </b>.</p>
+<p>In <a href ="https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/">Part I</a> we covered the first steps of our machine learning pipeline: <b>Framing the Problem</b>, <b>Retrieving the Data </b>, <b>Exploring and Understanding your Data</b>, and <b>Processing the Data for training </b>.</p>
 
-<p>In this notebook we will go sraight into <b>compiling</b>, <b>training</b>, and <b>evaluating</b> a baseline convolutional neural network.  We&rsquo;ll end by going over what still needs to be done before we can consider this model ready for deployment.</p>
+<p>In this tutorial we will go sraight into <b>compiling</b>, <b>training</b>, and <b>evaluating</b> a baseline convolutional neural network.  We&rsquo;ll end by going over what still needs to be done before we can consider this model ready for deployment.</p>
+
+<hr />
 
 <h2>Table of Contents</h2>
 
@@ -596,6 +600,8 @@ In this notebook we will go sraight into compiling, training, and evaluating a b
 <li><a href="#whats_next">What&rsquo;s Next</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
 </ul>
+
+<hr />
 
 <p><br>
 To begin, let&rsquo;s import some modules and functions that will be useful later:</p>
@@ -1029,6 +1035,8 @@ You&rsquo;ll notice that, depending on the waveform, our CNN has varying levels 
 <p>Identifying the first arriving seismic wave generated by an earthquake is a critical component of earthquake early warning and it is a topic that is of continued interest from both a scientific and public safety point of view. As of writing this post, earthquake early warning has recently received more funding to support operations, improve existing seismic stations, and expand the current earthquake early warning system on the West Coast.</p>
 
 <p>While there exists non-machine learning earthquake detection systems, it remains to be seen if deep neural networks can not only classify and detect earthquakes, but do so more accurately and faster than current detection algorithms which do not use DNN.</p>
+
+<p>You can find the source code to this tutorial on my <a href ="https://github.com/ngrayluna/P_Phase_Picker">GitHub</a>.</p>
 
 <hr />
 
