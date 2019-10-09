@@ -261,7 +261,7 @@ axes.set_xlabel(&amp;quot;Time [s]&amp;quot;)
 &lt;pre&gt;&lt;code&gt;Text(0.5,0,&#39;Time [s]&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;img srce =&#34;./img/output_18_1.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src =&#34;./img/output_18_1.png&#34;&gt;&lt;/p&gt;
 
 &lt;p&gt;As expected the p-arrival is pick made by the human analyst was made when there was a change in amplitude and frequency. In this case this happens at around 350 seconds.&lt;/p&gt;
 
