@@ -356,7 +356,7 @@ for i in range(rows):
 
 &lt;p&gt;&lt;img src=&#34;./img/Neurons-Network_T.jpg&#34;&gt;&lt;/p&gt;
 
-&lt;p&gt;This is the second of two Jupyter Notebooks. In Part I we will cover the first steps of the machine learning pipeline: &lt;b&gt;Framing the Problem&lt;/b&gt;, &lt;b&gt;Retrieving the Data &lt;/b&gt;, &lt;b&gt;Exploring and Understanding your Data&lt;/b&gt;, and &lt;b&gt;Processing the Data for training &lt;/b&gt;.&lt;/p&gt;
+&lt;p&gt;In Part I we will cover the first steps of the machine learning pipeline: &lt;b&gt;Framing the Problem&lt;/b&gt;, &lt;b&gt;Retrieving the Data &lt;/b&gt;, &lt;b&gt;Exploring and Understanding your Data&lt;/b&gt;, and &lt;b&gt;Processing the Data for training &lt;/b&gt;.&lt;/p&gt;
 
 &lt;p&gt;In this notebook we will go sraight into &lt;b&gt;compiling&lt;/b&gt;, &lt;b&gt;training&lt;/b&gt;, and &lt;b&gt;evaluating&lt;/b&gt; a baseline convolutional neural network.  We&amp;rsquo;ll end by going over what still needs to be done before we can consider this model ready for deployment.&lt;/p&gt;
 
