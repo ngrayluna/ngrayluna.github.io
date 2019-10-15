@@ -120,7 +120,7 @@ stream = client.get_waveforms(network = network, station = station, location = l
 
 &lt;h3&gt;Quick Note About ObsPy&#39;s Stream Object&lt;/h3&gt;
 
-&lt;p&gt;The following is directly from [ObsPy&amp;rsquo;s Documentation] page (&lt;a href=&#34;https://docs.obspy.org/packages/obspy.core.html):&#34; target=&#34;_blank&#34;&gt;https://docs.obspy.org/packages/obspy.core.html):&lt;/a&gt;
+&lt;p&gt;The following is directly from &lt;a href=&#34;https://docs.obspy.org/packages/obspy.core.html&#34; target=&#34;_blank&#34;&gt;ObsPy&amp;rsquo;s Documentation&lt;/a&gt; page:
 Seismograms of various formats (e.g. SAC, MiniSEED, GSE2, SEISAN, Q, etc.) can be imported into a Stream object using the &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;read()&lt;/span&gt; function.&lt;/p&gt;
 
 &lt;p&gt;Streams are list-like objects which contain multiple Trace objects, i.e. gap-less continuous time series and related header/meta information.&lt;/p&gt;
@@ -325,7 +325,7 @@ for i in range(rows):
 
 &lt;h2&gt;&lt;a name = &#34;summary&#34;&gt;Summary&lt;/a&gt;&lt;/h2&gt;
 
-&lt;p&gt;In this tutorial we formally stated the problem, broke down a complicated problem into a more manageable one, downloaded time-series data and manually picked phase information, processed the data by applying filters and demeaning it, and we ended by saving it into a compressed file format (.npz). In the next blog we will go over how to: read in saved training data labels, format the data for training, build a baseline CNN model, train said model, make first-and make first-order interpretations.&lt;/p&gt;
+&lt;p&gt;In this tutorial we formally stated the problem, broke down a complicated problem into a more manageable one, downloaded time-series data and manually picked phase information, processed the data by applying filters and demeaning it, and we ended by saving it into a compressed file format (.npz). In the next &lt;a href=&#34;https://ngrayluna.github.io/post/p-phase-picker-tutorial/&#34; target=&#34;_blank&#34;&gt;blog&lt;/a&gt; we will go over how to: read in saved training data labels, format the data for training, build a baseline CNN model, train said model, make first-and make first-order interpretations.&lt;/p&gt;
 
 &lt;hr /&gt;
 
