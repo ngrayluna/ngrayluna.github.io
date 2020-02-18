@@ -354,7 +354,9 @@ for i in range(rows):
       <link>https://ngrayluna.github.io/post/p-phase-picker-tutorial/</link>
       <pubDate>Tue, 01 Oct 2019 01:00:00 +0000</pubDate>
       <guid>https://ngrayluna.github.io/post/p-phase-picker-tutorial/</guid>
-      <description>&lt;hr /&gt;
+      <description>
+
+&lt;hr /&gt;
 
 &lt;p&gt;&lt;img src=&#34;./img/Neurons-Network_T.jpg&#34;&gt;&lt;/p&gt;
 
@@ -379,7 +381,7 @@ for i in range(rows):
 &lt;hr /&gt;
 
 &lt;p&gt;&lt;br&gt;
-To begin, let&amp;rsquo;s import some modules and functions that will be useful later:&lt;/p&gt;
+Let&amp;rsquo;s get started! Open a Jupyter Notebook or your favorite Python IDE and include the following modules and functions:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import os
 import numpy as np
@@ -428,9 +430,9 @@ def format_Psaved_npz(label_array):
 &lt;p&gt;&lt;br&gt;
 &lt;h2&gt;&lt;a name=&#39;read_data&#39;&gt;Read Data In&lt;/a&gt;&lt;/h2&gt;&lt;/p&gt;
 
-&lt;p&gt;For this model we are using the data saved from our pre-processing efforts. There are a few different file formats for storing time-series data. Probably the most common file format you&amp;rsquo;ll come across are &lt;a href=&#34;https://www.hdfgroup.org/solutions/hdf5/&#34; target=&#34;_blank&#34;&gt;HDF5&lt;/a&gt; (Hierarchical Data Format) and NumPy&amp;rsquo;s .npz, which is NumPy&amp;rsquo;s way of saving arrays into a compressed file format. For this tutorial we will use .npz files.&lt;/p&gt;
+&lt;p&gt;For this model, we are using the data saved from our pre-processing efforts in the last tutorial. Recall that in the last post we saved our data (time-series waveforms) and their associated labels (arrival times of the first arriving P-Phase seismic wave) into Numpy&amp;rsquo;s compressed file format.&lt;/p&gt;
 
-&lt;p&gt;There are two files to read in: time-series waveforms and the arrival times of the first arriving (P-Phase) seismic wave. The latter of which are the labels we are using for our training model. Simply use &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;np.load()&lt;/span&gt; to read both .npz files in.  Once the files are read we&amp;rsquo;ll store them into NumPy arrays. I&amp;rsquo;ve written a function to then take this  &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;numpy.lib.npyio.NpzFile&lt;/span&gt; and store it into a NumPy array.&lt;/p&gt;
+&lt;p&gt;There are two files to read in: time-series waveforms and the arrival times of the first arriving (P-Phase) seismic wave. The latter of which are the labels we are using for our training model. Simply use &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;np.load()&lt;/span&gt; to read both .npz files in.  Once the files are in memory we&amp;rsquo;ll store them in NumPy arrays. I&amp;rsquo;ve written a function to then take this  &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;numpy.lib.npyio.NpzFile&lt;/span&gt; and store it into a NumPy array.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Let&#39;s read this in and check it is right.
 data_waves = np.load(&amp;quot;./pre_process/waveforms.npz&amp;quot;)
@@ -441,7 +443,7 @@ data_array = form_WAVsaved_npz(data_waves)
 p_arrivals = format_Psaved_npz(data_labels)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;To make our lives easier, we&amp;rsquo;ll also assign the number of traces, the number of features, and the number of sample points to variables
+&lt;p&gt;To make our lives easier we’ll also assign the number of traces, the number of features, and the number of sample points to variables num_traces, num_feat, and npts, respectively.
 &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;num_traces&lt;/span&gt;, &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;num_feat&lt;/span&gt;, and &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;npts&lt;/span&gt;, respectively.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Number of traces
@@ -454,12 +456,12 @@ num_feat   = data_array.shape[2]
 npts = data_array.shape[1]
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;We need to set aside some of our data set for training and set the remaining bit as our validation set.  The size of your data set determines what ratio of training to validation you&amp;rsquo;ll want to use. For &amp;ldquo;smaller&amp;rdquo; data sets it is common to use 80% of your data set for training and set aside the other 20% for validation. If you have a data set in the millions, then you&amp;rsquo;ll probably end up using 10% of your data for validation and the rest for training.&lt;/p&gt;
+&lt;p&gt;At this point, we need to set aside some of our data for training and set aside the remaining data for our validation set. For “smaller” data sets it is common to use 80% of your data set for training and set aside the other 20% for validation. If you have a data set in the millions, then you’ll probably end up using 10% of your data for validation and the rest for training.&lt;/p&gt;
 
-&lt;p&gt;To split our data set I am simply setting&lt;br /&gt;
+&lt;p&gt;To split our data set we will set&lt;br /&gt;
 &lt;center&gt;&lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;TRAIN_TEST_SPLIT = 0.2&lt;/span&gt;&lt;/center&gt;&lt;/p&gt;
 
-&lt;p&gt;In other words, keep 80% for training.&lt;/p&gt;
+&lt;p&gt;In other words, we&amp;rsquo;re keeping 80% for training and the remaining 20% for validation.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Split data into training and validation 
 # The percent of data that will be included in the test set (here 20%)
@@ -479,16 +481,14 @@ y_val  = p_arrivals[: nr_val_data]
 
 &lt;h2&gt;&lt;a name = &#39;cnn_baseline&#39;&gt;A Convolutional Neural Network Baseline&lt;/a&gt;&lt;/h2&gt;
 
-&lt;p&gt;We have read our data in, formatted into NumPy arrays, and we just split the data into a training and validation training set. Let&amp;rsquo;s define our deep neural network!  As stated in the title of this blog, we will be using convolutional neural networks (CNN). Among other things, CNN are designed to handle grid-like data such as time-series data and images. Alternatively, we could use a type of Recurrent Neural Network (RNN), which can also handle data with spatial-temporal dependencies, however let&amp;rsquo;s stick to CNNs as they are currently one of the most popular models in the field of Computer Vision.&lt;/p&gt;
+&lt;p&gt;So far we have read our data into our notebook, formatted it into NumPy arrays, and we just split the data into a training and validation training set. Let’s now define our deep neural network! As stated in the title of this blog and the previous post, we will be using convolutional neural networks (CNN). Among other things, CNN are designed to handle grid-like data such as time-series data and images. Alternatively, we could use a Recurrent Neural Network (RNN) which can also handle data with spatial-temporal dependencies. Let’s stick to CNNs as they are currently one of the most successful models in the field of Computer Vision.&lt;/p&gt;
 
 &lt;p&gt;To create our convolutional neural network model we will use &lt;a href=&#34;https://keras.io/&#34; target=&#34;_blank&#34;&gt;Keras&lt;/a&gt; which is a high-level neural network API. It is fairly straight forward to use and the community supporting Keras is robust.&lt;/p&gt;
 
 &lt;p&gt;&lt;br&gt;
 &lt;h3&gt;Hyperparameter Choice&lt;/h3&gt;&lt;/p&gt;
 
-&lt;p&gt;Unfortunately, there does not exist a set of rules which will tell you what hyperparameters you should use. The process of fine-tuning your model is empirical and requires a lot of trial and error.  However, that doesn&amp;rsquo;t mean you should start choosing randomly; read what model configurations is working for other groups and do a little homework on which parameters are appropriate.&lt;/p&gt;
-
-&lt;p&gt;In our case we will use the following:&lt;/p&gt;
+&lt;p&gt;We are now ready to define some hyperparameters. Unfortunately, there does not exist a set of rules which will tell you what hyperparameters you should use. The process of fine-tuning your model is empirical and requires a lot of trial and error. However, that doesn’t mean you should start choosing randomly. For a starting point, read up on current best practices, learn what model configurations are working for other groups, and do a little homework on which parameters are appropriate. I&amp;rsquo;ve gone ahead and done this for this tutorial. With that said, we&amp;rsquo;ll be using the following hyperparameters:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Mini batches of 256 [memory on computers is stored in 2&amp;rsquo;s, so batches of a power of 2 helps train a little faster]&lt;br /&gt;&lt;/li&gt;
@@ -502,20 +502,20 @@ y_val  = p_arrivals[: nr_val_data]
 &lt;li&gt;Adam optimizer [best of RMSprop and gradient decent with momentum]&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;If you have experience using convolutional neural networks, you&amp;rsquo;ll note that as input we can specify more than one channel. In the case of color images we define, and give as input, three channels as input: red, green, and blue. Hence, our input will have dimension:&lt;/p&gt;
+&lt;p&gt;If you have experience using convolutional neural networks, you’ll already know that in addition to specifying the input size, we also need to define the number of channels. Thus, our input will have the form of:&lt;/p&gt;
 
 &lt;p&gt;&lt;centre&gt;&lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;(# training examples, number of samples, # of channels)&lt;/span&gt;&lt;/centre&gt;.&lt;/p&gt;
 
-&lt;p&gt;The data recorded by the seismometers record motion in three directions: a vertical(up-down) and two horizontal motions (N-S and E-W). Thus, for each training example we will give our neural network not just one, but three waveforms. Thus, our input array will have three channels. Below is an illustration of what our CNN looks like:&lt;/p&gt;
+&lt;p&gt;Seismometers record motion in three directions: a vertical(up-down) and two horizontal motions (N-S and E-W). Thus, for each training example, we will give our neural network not just one, but three waveforms. Thus, our input array will have three channels. Below is an illustration of what our CNN looks like:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src = &#39;./img/three_comp_cnn.png&#39;&gt;
-&lt;b&gt;Figure:&lt;/b&gt; Schematic of 1D convolutional neural network used to identify the first-arriving phase arrival of an earthquake. Note that each instance is composed of three channels, one for each component measuered by the seismometer (Vertical, North-South, East-West).&lt;/p&gt;
+&lt;b&gt;Figure:&lt;/b&gt; Schematic of the 1D convolutional neural network used to identify the first-arriving phase arrival of an earthquake. Note that each instance is composed of three channels, one for each component measured by the seismometer (Vertical, North-South, East-West).&lt;/p&gt;
 
-&lt;p&gt;For the sake of brevity, I&amp;rsquo;ll omit commentary on how we chose the number of hidden layers and the filter size (or sometimes referred to as &amp;lsquo;kernels&amp;rsquo;) in this blog. I&amp;rsquo;ll make a separate blog detailing the knitty-gritty details of how convolutional neural networks work.&lt;/p&gt;
+&lt;p&gt;For the sake of brevity, I’ll omit commentary on how we chose the number of hidden layers and the filter size (sometimes referred to as ‘kernels’) in this blog. I’ll make a separate blog detailing the nitty-gritty details of how convolutional neural networks work.&lt;/p&gt;
 
-&lt;p&gt;With this in mind let&amp;rsquo;s go ahead and make our convolutional neural network. Our input array, &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt; x_train&lt;/span&gt;, has input dimension of:&lt;/p&gt;
+&lt;p&gt;With this in mind let’s go ahead and make our convolutional neural network.   Below is a summary of our model. Each line describes a hidden layer and it’s associated number of weights and parameters. Our input array, &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt; x_train&lt;/span&gt;, has input dimension of:&lt;/p&gt;
 
-&lt;p&gt;We&amp;rsquo;ll need to specify this for our model (see variable &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;input_trace&lt;/span&gt;). Below is a summary of our model. Each line describes a hidden layer and it&amp;rsquo;s associated number of weights and parameters.&lt;/p&gt;
+&lt;p&gt;which we store in as a variable labeled &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;input_trace&lt;/span&gt;.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Hyperparameters 
 batch_size = 256
@@ -586,7 +586,7 @@ _________________________________________________________________
 
 &lt;h2&gt;&lt;a name=&#39;train_model&#39;&gt;Training the Model&lt;/a&gt;&lt;/h2&gt;
 
-&lt;p&gt;With our data read in and our model architecture defined, we are now ready to run our baseline convolutional neural network.  In Keras this amounts to giving our compiled model the training data set and its associated labels, the number of epochs and batch size we want, and the validation set as shown below:&lt;/p&gt;
+&lt;p&gt;With our data read in and our model architecture defined, we are now ready to run our baseline convolutional neural network. With Keras, this amounts to giving our compiled model the training data set and its associated labels, the number of epochs and batch size we want, and the validation (see below). To train our CNN we use the model&amp;rsquo;s .fit() method:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Train Model
 history = p_phase_picker.fit(x = x_train,
@@ -687,7 +687,7 @@ Epoch 400/400
 &lt;p&gt;1) Computation time&lt;br /&gt;
 2) The loss from the training and validation data sets.&lt;/p&gt;
 
-&lt;p&gt;The second point here is worth spending some time thinking about. Remember that the overall objective is to create an algorithm which learns from the data we give it. i.e. we want our algorithm to generalize to data it has never seen before.  We should expect, therefore, that the training loss decreases for every epoch. Does this happen in our case? Let&amp;rsquo;s plot the training and validation loss curves (sometimes called &amp;lsquo;learning curves&amp;rsquo;) to help us understand a little more of how well our deep neural network performed:&lt;/p&gt;
+&lt;p&gt;The second point is worth discussing. Remember that the overall objective is to create an algorithm that learns from the data we give it. i.e. we want our algorithm to generalize to data it has never seen before. We should expect, therefore, that the training loss decreases for every epoch. Does this happen in our case? Let’s plot the training and validation loss curves (sometimes called ‘learning curves’) to help us understand a little more of how well our deep neural network performed:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# Validation loss curves #
 fig, axes = plt.subplots(nrows = 1, ncols = 1, figsize = (10,6))
@@ -700,19 +700,19 @@ axes.legend([&#39;Train&#39;, &#39;Validation&#39;], loc=&#39;upper left&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;img style=&#34;float:left&#34; src=&#34;./img/model_loss.png&#34;  &gt;
-&lt;b&gt;Figure:&lt;/b&gt; Learning curve results from training 1D convolutional neural network with the above-mentioned hyper parameters. Red curve depicts loss from training set, blue curve depicts loss from validation set.&lt;/p&gt;
+&lt;b&gt;Figure:&lt;/b&gt;  The learning curve results from training the 1D convolutional neural network with the above-mentioned hyperparameters. The red curve depicts loss from the training set, the blue curve depicts loss from the validation set.&lt;/p&gt;
 
-&lt;p&gt;The red and blue curves show the loss (sometimes called &amp;lsquo;cost&amp;rsquo;) per epoch on the training and validation set, respectively.  As expected, the neural network performs poorly at the onset of training(at this point the model is probably randomly guessing where the first phase is) and gradually improves with epoch. During training the neural network is learning directly from the training set, so the prediction error (loss/cost) is lower than that of the validation training set.&lt;/p&gt;
+&lt;p&gt;The red and blue curves show the loss (sometimes called ‘cost’) per epoch on the training and validation set, respectively. As expected, the neural network performs poorly at the onset of training (at this point the model is probably randomly guessing where the first phase is) and gradually improves with epoch. During training the neural network is learning directly from the training set, so the prediction error (loss/cost) is lower than that of the validation training set.&lt;/p&gt;
 
-&lt;p&gt;We stopped training around epoch &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;400&lt;/span&gt; because at this point it would seem our neural network is no longer learning/improving its ability to make predictions. Also, we don&amp;rsquo;t want to let the neural network run too long, else the neural network might begin to over fit.&lt;/p&gt;
+&lt;p&gt;We stopped training around epoch &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;400&lt;/span&gt; because at this point it would seem our neural network is no longer learning/improving its ability to make predictions. Also, we don’t want to let the neural network run too long, else the neural network might begin to overfit.&lt;/p&gt;
 
 &lt;hr /&gt;
 
 &lt;h2&gt;&lt;a name =&#39;visualize_results&#39;&gt;Visualize the Results&lt;/a&gt;&lt;/h2&gt;  
 
-&lt;p&gt;I don&amp;rsquo;t know about you, but most of the tutorials I come across normally end here. Meaning, they show a loss curve from training and call it a day. I am a visual person, so I want to see what the output of my model gave me. Sure, these learning curves tell me that, to a first order that my neural network is learning to pick the first arrival. But, how does this look compared to the pick made by a human being? Let&amp;rsquo;s look at some earthquakes.&lt;/p&gt;
+&lt;p&gt;I don’t know about you, but most of the tutorials I come across normally end here. Meaning, they show a loss curve from training and call it a day. I am a visual person, so I want to see the output of my model. Sure, these learning curves tell me that, to a first-order that my neural network is learning to pick the first arrival. But, how does this look compared to the pick made by a human being? Let’s look at some earthquakes.&lt;/p&gt;
 
-&lt;p&gt;Below I have plotted two randomly (using Numpy&amp;rsquo;s &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;rand.randint()&lt;/span&gt; function) chosen waveforms from our validation set.  The red vertical line is the pick made by a humanoid. The purple line is the pick made by our CNN.&lt;/p&gt;
+&lt;p&gt;Below are two randomly (using Numpy&amp;rsquo;s &lt;span style=&#34;font-family:Courier; font-size:1.0em;&#34;&gt;rand.randint()&lt;/span&gt; function) chosen waveforms from our validation set.  The red vertical line is the pick made by a human. The purple line is the pick made by our CNN.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def read_results(file_name):
     file_npz = np.load(file_name)
@@ -780,10 +780,10 @@ plt.tight_layout()
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;&lt;img src = &#34;./img/output_27_0.png&#34;&gt;
-&lt;b&gt;Figure:&lt;/b&gt; Two randomly chosen earthquake seismic records from the training set. The red vertical line is the manually selected phase arrival. The purple line depicts the phase pick made by the machine learning algorithm after training.&lt;/p&gt;
+&lt;b&gt;Figure:&lt;/b&gt; Two randomly chosen earthquake seismic records from the training set. The red vertical line is the manually selected phase arrival. The purple line depicts the phase pick made by the machine learning algorithm.&lt;/p&gt;
 
 &lt;p&gt;&lt;br&gt;
-You&amp;rsquo;ll notice that, depending on the waveform, our CNN has varying levels of success in picking the first arrival.  This makes sense given that so far we have only run a baseline model; there is still plenty of refining and polishing that has to be done before we can expect too much from our neural network.&lt;/p&gt;
+You’ll notice that, depending on the waveform, our CNN has varying levels of success in picking the first arrival. This makes sense given that so far we have only run a baseline model; there is still plenty of refining and polishing that has to be done before we can expect too much from our neural network.&lt;/p&gt;
 
 &lt;p&gt;What&amp;rsquo;s left do? We&amp;rsquo;ll explore this in the next section.&lt;/p&gt;
 
@@ -791,25 +791,27 @@ You&amp;rsquo;ll notice that, depending on the waveform, our CNN has varying lev
 
 &lt;h2&gt;&lt;a name =&#39;whats_next&#39;&gt;What&#39;s Next?&lt;/a&gt;&lt;/h2&gt;
 
-&lt;p&gt;There&amp;rsquo;s loads to do before we can call this model satisfactory. For a start, we should try to get more data. The model results shown above only used ~10,000 waveforms, which is a bit on the small side for a deep neural network. It might be instructive to try to double or triple this and see if our loss curves improve.&lt;/p&gt;
+&lt;p&gt;There is a lot to do before we can call this model satisfactory. For a start, we should try to get more data. The model results are shown above only used ~10,000 waveforms, which is a bit on the small side for a deep neural network. It might be instructive to try to double or triple the data set and see if our loss curves improve.&lt;/p&gt;
 
-&lt;p&gt;We could also play with the complexity of our model. At the moment we only have two 1D convolutional layers. Perhaps the model will perform better with more or larger filter sizes? (&lt;b&gt;Warning:&lt;/b&gt; it is best practice to start small before jumping into larger models!)&lt;/p&gt;
+&lt;p&gt;We could also play with the complexity of our model. At the moment we only have two, 1D convolutional layers. Perhaps the model will perform better with more or larger filter sizes? (&lt;b&gt;Warning:&lt;/b&gt; it is best practice to start small before jumping into larger models!)&lt;/p&gt;
 
 &lt;p&gt;One could and should explore the batch sizes and/or using a different optimization method.&lt;/p&gt;
 
-&lt;p&gt;We could and should shift the window of where our seismic waveform is centered. Not only might this make our neural network more robust, it will increase how much training data we have (i.e. data augmentation).&lt;/p&gt;
+&lt;p&gt;We could and should also shift the window where our seismic waveform is centered. Not only might this make our neural network more robust, but it will also increase how much training data we have (i.e. data augmentation).&lt;/p&gt;
 
-&lt;p&gt;Once we have reached a point where we are satisfied with how our model is performing we will need to run this on a &lt;b&gt;test set&lt;/b&gt;. In other words, we need to run this on a data set which the convolutional neural network has never seen before. To do this, simply leave a fraction (maybe 1/10th) of your entire data set and save it for later use. Once you have your model parameters, simply load them in and run it on your test set. Keras makes this very easy to do and I&amp;rsquo;ll go into detail in a future post of how to do this.&lt;/p&gt;
+&lt;p&gt;Once we have reached a point where we are satisfied with how our model is performing we will need to run this on a &lt;b&gt;test set&lt;/b&gt;. In other words, we need to run this on a data set which the convolutional neural network has never seen before. We could easily achieve this by setting aside test data when we originally split our data set into a train and validation set.&lt;/p&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;With pre-trained weights and a model architecture, you can load a test data set and make predictions. The performance of the model on the test set will guide our decision on whether or not we can use this on out-of-sample data. In our case, we want to know if can we use this model to predict the P-wave for new seismic traces.&lt;/p&gt;
+
+&lt;h2 id=&#34;keras-makes-leading-in-models-and-making-predictions-easy-to-do-and-i-ll-go-into-detail-in-a-future-post-of-how-to-do-this&#34;&gt;Keras makes leading in models and making predictions easy to do and I’ll go into detail in a future post of how to do this.&lt;/h2&gt;
 
 &lt;h2&gt;&lt;a name =&#39;conclusion&#39;&gt;Conclusion&lt;/a&gt;&lt;/h2&gt;
 
-&lt;p&gt;In this tutorial we covered how to &lt;b&gt;compile&lt;/b&gt;, &lt;b&gt;train&lt;/b&gt;, and make a surface-level &lt;b&gt;evaluation&lt;/b&gt; of a baseline convolutional neural network.  In the &lt;a href=&#34;https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/&#34; target=&#34;_blank&#34;&gt;first part&lt;/a&gt; of the tutorial we learned how to frame our problem, download data, process it, and save it into a file format from which we could use for training our convolutional neural network.&lt;/p&gt;
+&lt;p&gt;In this tutorial we covered how to &lt;b&gt;compile&lt;/b&gt;, &lt;b&gt;train&lt;/b&gt;, and make a surface-level &lt;b&gt;evaluation&lt;/b&gt; of a baseline convolutional neural network.  In the &lt;a href=&#34;https://ngrayluna.github.io/post/p-phase-picker-tutorial_pi/&#34; target=&#34;_blank&#34;&gt;first part&lt;/a&gt; of the tutorial we learned how to frame our problem, download data, process it, and save it into a file format from which we can use later for training our convolutional neural network.&lt;/p&gt;
 
-&lt;p&gt;Identifying the first arriving seismic wave generated by an earthquake is a critical component of earthquake early warning and it is a topic that is of continued interest from both a scientific and public safety point of view. As of writing this post, earthquake early warning has recently received more funding to support operations, improve existing seismic stations, and expand the current earthquake early warning system on the West Coast.&lt;/p&gt;
+&lt;p&gt;Identifying the first arriving seismic wave generated by an earthquake is a critical component of earthquake early warning and it is a topic of continued interest from both a scientific and public safety point of view. As of writing this post, earthquake early warning recently received funding to support operations, improve existing seismic stations, and expand the current earthquake early warning system across the West Coast.&lt;/p&gt;
 
-&lt;p&gt;While there exists non-machine learning earthquake detection systems, it remains to be seen if deep neural networks can not only classify and detect earthquakes, but do so more accurately and faster than current detection algorithms which do not use DNN.&lt;/p&gt;
+&lt;p&gt;While there exist non-machine learning earthquake detection systems, it remains to be seen if deep neural networks will play a role in EEW. Deep learning algorithms not only need to classify and detect earthquakes, but they need to do so accurately and faster than current non-Deep Learning algorithms.&lt;/p&gt;
 
 &lt;p&gt;You can find the source code to this tutorial on my &lt;a href =&#34;https://github.com/ngrayluna/P_Phase_Picker&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 
